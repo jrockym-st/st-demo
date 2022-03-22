@@ -1,0 +1,12 @@
+--- 
+- name: deploy master role
+  hosts: aws_master
+  become: yes
+  roles:
+    - mtabishk.ansible_kubernetes_master_role 
+
+- name: deploy worker roles
+  hosts: aws_worker
+  become: yes
+  roles:
+    - mtabishk.ansible_kubernetes_worker_role

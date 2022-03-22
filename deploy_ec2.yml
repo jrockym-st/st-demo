@@ -1,0 +1,45 @@
+- name: launch worker and master nodes on EC2
+  hosts: localhost 
+  become: false 
+  
+  vars: 
+    keypair: RTS
+    instance_type: t2.micro 
+    image: ami-08e4e35cccc6189f4
+    vpc_subnet_id: subnet-0c365c22256f72945 
+    security_group_id: sg-0bcad559f50434116 
+    region: us-east-1 
+    zone: us-east-1c
+  
+  tasks:
+    - name: launch master instance 
+      amazon.aws.ec2: 
+        keypair: "{{ keypair }}" 
+        group_id: "{{ security_group_id }}" 
+        instance_type: "{{ instance_type }}" 
+        vpc_subnet_id: "{{ vpc_subnet_id }}" 
+        image: "{{ image }}" 
+        assign_public_ip: yes 
+        wait: yes 
+        wait_timeout: 500 
+        count: 1 
+        instance_tags:
+          Name: "master"
+        region: "{{ region }}"
+        zone: "{{ zone }}"
+
+    - name: launch worker nodes 
+      amazon.aws.ec2: 
+        keypair: "{{ keypair }}" 
+        group_id: "{{ security_group_id }}" 
+        instance_type: "{{ instance_type }}" 
+        vpc_subnet_id: "{{ vpc_subnet_id }}" 
+        image: "{{ image }}" 
+        assign_public_ip: yes 
+        wait: yes 
+        wait_timeout: 500 
+        count: 3 
+        instance_tags:
+          Name: "worker"
+        region: "{{ region }}"
+        zone: "{{ zone }}"
