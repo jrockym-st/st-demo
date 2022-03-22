@@ -1,4 +1,6 @@
 --- 
+# Use off of the shelf roles from ansible galaxy to build out the kubernetes roles
+# Hosts are dynamic based on the EC2 name tags
 - name: deploy master role
   hosts: aws_master
   become: yes

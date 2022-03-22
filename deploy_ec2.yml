@@ -1,16 +1,20 @@
 - name: launch worker and master nodes on EC2
   hosts: localhost 
   become: false 
-  
+
+  # Constant vars for both of our master and worker nodes
   vars: 
     keypair: RTS
     instance_type: t2.micro 
+    # Amazon Linux
     image: ami-08e4e35cccc6189f4
     vpc_subnet_id: subnet-0c365c22256f72945 
+    # Sec group setup on VPC for the kubernetes ports
     security_group_id: sg-0bcad559f50434116 
     region: us-east-1 
     zone: us-east-1c
   
+  # Master and worker configs are the same aside from count and tags
   tasks:
     - name: launch master instance 
       amazon.aws.ec2: 

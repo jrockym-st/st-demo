@@ -1,11 +1,7 @@
-# Dynamic inventory that queries the EC2 inventory
+# Dynamic inventory that queries the EC2 inventory and creates two groups based on name tags 
 plugin: aws_ec2
-#boto_pr=ofile: default
 regions:
   - us-east-1
-#filters:
-#  tag:name:
-#    - worker
 strict_permissions: False
 keyed_groups:
   - key: tags['name']
